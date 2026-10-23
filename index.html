@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pivolina · Zagrebačko craft pivo</title>
+<meta name="description" content="Pivolina – fiktivni zagrebački craft brend. Prototip početne stranice za EY Studio+ dizajnerski zadatak.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%238F2F06'%3E%3Crect width='8' height='8'/%3E%3Crect x='16' width='8' height='8'/%3E%3Crect x='8' y='8' width='8' height='8'/%3E%3Crect y='16' width='8' height='8'/%3E%3Crect x='16' y='16' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oi&amp;family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{opacity:0.8}
+.pv-strip{background-image:url(assets/etikete-traka.jpg);background-repeat:no-repeat}
+.pv-map{-webkit-mask:url(assets/hrvatska.svg) center/contain no-repeat;mask:url(assets/hrvatska.svg) center/contain no-repeat}
+.pv-fade{transition:background-color .6s ease,color .6s ease,border-color .6s ease,box-shadow .6s ease}
+@keyframes pv-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pv-marq{animation:pv-marq 28s linear infinite}
+@media (prefers-reduced-motion: reduce){.pv-marq{animation:none}}
+.pv-burger,.pv-mnav{display:none}
+@media (max-width: 760px){.pv-age-h{font-size:40px !important}}
+@media (max-width: 1100px){
+.pv-fans-h{font-size:min(72px, calc((100vw - 96px) / 13.5)) !important}
+.pv-nav{gap:28px !important;font-size:18px !important}
+.pv-spin-grid{gap:32px !important}
+.pv-can{transform:translate(-50%,-50%) rotate(45deg) scale(0.62) !important}
+.pv-can-ring{width:400px !important;height:400px !important}
+.pv-taste{font-size:36px !important}
+}
+@media (max-width: 760px){
+.pv-wrap{padding-left:16px !important;padding-right:16px !important}
+.pv-hd{padding:10px 16px !important;flex-wrap:nowrap !important;gap:10px !important}
+.pv-nav{display:none !important}
+.pv-burger{display:inline-flex}
+.pv-mnav{display:flex}
+.pv-logo-word{font-size:20px !important}
+.pv-hide-sm{display:none}
+.pv-kupi{padding:12px 18px !important;font-size:15px !important}
+.pv-cart{width:46px !important;height:46px !important}
+.pv-hero{padding-top:24px !important;padding-bottom:24px !important}
+.pv-hero-svg{height:120px !important}
+.pv-sticky{top:68px !important;height:calc(100vh - 68px) !important;min-height:720px}
+.pv-spin-grid{display:flex !important;flex-direction:column;padding:16px 16px 216px !important;gap:12px !important}
+.pv-copy{display:contents !important}
+.pv-can-col{order:2;flex:1 1 auto;min-height:250px}
+.pv-spin-grid .pv-cta{order:3;align-self:center !important;margin-top:8px}
+.pv-taste{font-size:24px !important}
+.pv-dl{font-size:14px !important;gap:4px 14px !important}
+.pv-cta{font-size:15px !important;padding:13px 20px !important}
+.pv-can{transform:translate(-50%,-50%) rotate(45deg) scale(0.36) !important}
+.pv-can-ring{width:210px !important;height:210px !important}
+.pv-marq-wrap{bottom:20px !important;height:60px !important}
+.pv-marq li{font-size:14px !important;padding:9px 16px !important}
+.pv-tagline{font-size:17px !important;left:16px !important;right:16px !important;bottom:132px !important}
+.pv-sec{padding-top:56px !important;padding-bottom:40px !important;gap:36px !important}
+.pv-h-svg{height:64px !important}
+.pv-story{font-size:17px !important}
+.pv-story-lead{font-size:24px !important}
+.pv-trio{grid-template-columns:minmax(0,1fr) !important;gap:48px !important}
+.pv-trio img{height:280px !important}
+.pv-fans-h{font-size:calc((100vw - 32px) / 13.5) !important;max-width:100%;overflow-wrap:anywhere}
+.pv-fans{grid-template-columns:repeat(2,minmax(0,1fr)) !important;grid-template-rows:none !important;grid-auto-rows:170px}
+.pv-fans figure{grid-column:auto !important;grid-row:auto !important}
+.pv-fans figure:first-child{grid-column:1 / span 2 !important}
+.pv-lok-h{padding-top:56px !important}
+.pv-lok-svg{height:84px !important}
+.pv-foot-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+.pv-foot{padding-top:48px !important;gap:36px !important}
+}
+</style>
+<style>html{scroll-behavior:smooth}#app:empty{min-height:100vh;background:#FFD23F}</style>
+<script src="https://cdn.jsdelivr.net/npm/morphdom@2.7.4/dist/morphdom-umd.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<template id="pv-template">
+<div class="pv-fade" style="background: {{t.bg}}; color: {{t.ink}}; font-family: Inter, system-ui, sans-serif; min-height: 100vh">
+<sc-if value="{{gateOpen}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="pv-age-h" class="pv-fade" style="position: fixed; inset: 0; z-index: 200; background: {{t.bg}}; color: {{t.ink}}; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; font-family: Inter, system-ui, sans-serif; overflow: auto">
+<div style="width: 100%; max-width: 640px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center">
+<span style="display: flex; align-items: center; gap: 10px"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><rect x="0" y="0" width="8" height="8" fill="{{t.ink}}"></rect><rect x="16" y="0" width="8" height="8" fill="{{t.ink}}"></rect><rect x="8" y="8" width="8" height="8" fill="{{t.ink}}"></rect><rect x="0" y="16" width="8" height="8" fill="{{t.ink}}"></rect><rect x="16" y="16" width="8" height="8" fill="{{t.ink}}"></rect></svg><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: 0.04em">PIVOLINA</span></span>
+<sc-if value="{{gateAsk}}" hint-placeholder-val="{{ true }}">
+<h1 id="pv-age-h" class="pv-age-h" style="margin: 0; font-family: Oi, sans-serif; font-weight: 400; font-size: 64px; line-height: 1.05">Imaš li 18 godina?</h1>
+<p style="margin: 0; max-width: 480px; font-size: 19px; line-height: 1.5">Pivolinu prodajemo samo punoljetnim osobama. Potvrdi da imaš 18 ili više godina i uđi.</p>
+<div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center">
+<button type="button" onClick="{{ageYes}}" style="cursor: pointer; font-family: Inter, sans-serif; font-weight: 700; font-size: 19px; padding: 17px 32px; border-radius: 999px; border: 0; background: {{t.ink}}; color: {{t.bg}}; box-shadow: 5px 5px 0 #141414">Da, imam 18+</button>
+<button type="button" onClick="{{ageNo}}" style="cursor: pointer; font-family: Inter, sans-serif; font-weight: 700; font-size: 19px; padding: 14px 30px; border-radius: 999px; border: 3px solid {{t.ink}}; background: transparent; color: {{t.ink}}">Ne, nemam</button>
+</div>
+<p style="margin: 0; font-size: 14px; font-weight: 700">Pij odgovorno.</p>
+</sc-if>
+<sc-if value="{{gateNo}}" hint-placeholder-val="{{ false }}">
+<h1 id="pv-age-h" class="pv-age-h" style="margin: 0; font-family: Oi, sans-serif; font-weight: 400; font-size: 56px; line-height: 1.05">Vidimo se za koju godinu!</h1>
+<p style="margin: 0; max-width: 480px; font-size: 19px; line-height: 1.5">Pivolina je samo za punoljetne osobe.</p>
+<button type="button" onClick="{{ageBack}}" style="cursor: pointer; font-family: Inter, sans-serif; font-weight: 700; font-size: 16px; padding: 12px 24px; border-radius: 999px; border: 3px solid {{t.ink}}; background: transparent; color: {{t.ink}}">Natrag</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<header class="pv-fade" style="position: sticky; top: 0; z-index: 50; background: {{t.bg}}; border-bottom: 3px solid {{t.ink}}">
+<div class="pv-hd" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 14px 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+<a href="#vrh" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><rect x="0" y="0" width="8" height="8" fill="{{t.ink}}"></rect><rect x="16" y="0" width="8" height="8" fill="{{t.ink}}"></rect><rect x="8" y="8" width="8" height="8" fill="{{t.ink}}"></rect><rect x="0" y="16" width="8" height="8" fill="{{t.ink}}"></rect><rect x="16" y="16" width="8" height="8" fill="{{t.ink}}"></rect></svg>
+<span class="pv-logo-word" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: 0.04em">PIVOLINA</span>
+</a>
+<nav class="pv-nav" aria-label="Glavna navigacija" style="display: flex; gap: 104px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; flex-wrap: wrap">
+<a href="#piva" style="text-decoration: none; padding: 10px 0">Upoznaj Pivolinu</a>
+<a href="#prica" style="text-decoration: none; padding: 10px 0">Iz srca Zagreba</a>
+<a href="#lokalno" style="text-decoration: none; padding: 10px 0">Gdje kupiti</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 10px">
+<a href="#kosarica" class="pv-fade pv-cart" aria-label="{{cartLabel}}" style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border: 3px solid {{t.ink}}; border-radius: 999px; box-sizing: border-box; text-decoration: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.6 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2"></path></svg><sc-if value="{{cartHas}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; top: -6px; right: -6px; min-width: 24px; height: 24px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: #141414; color: #FFF8EC; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{cartCount}}</span></sc-if></a>
+<a href="#naruci" class="pv-fade pv-kupi" style="display: inline-flex; align-items: center; white-space: nowrap; background: {{t.ink}}; color: {{t.bg}}; text-decoration: none; font-weight: 700; font-size: 16px; padding: 14px 26px; border-radius: 999px; box-shadow: 4px 4px 0 #141414">
+Kupi<span class="pv-hide-sm">&#160;Pivolinu</span>
+</a>
+<button class="pv-burger pv-fade" onClick="{{toggleMenu}}" aria-label="Izbornik" aria-expanded="{{menuExpanded}}" style="cursor: pointer; width: 46px; height: 46px; align-items: center; justify-content: center; border: 3px solid {{t.ink}}; border-radius: 999px; background: transparent; padding: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+</div>
+</div>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
+<nav class="pv-mnav pv-fade" aria-label="Mobilna navigacija" style="flex-direction: column; padding: 8px 16px 20px; gap: 4px; border-top: 2px solid {{t.ink}}; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px">
+<a href="#piva" onClick="{{closeMenu}}" style="text-decoration: none; padding: 12px 0">Upoznaj Pivolinu</a>
+<a href="#prica" onClick="{{closeMenu}}" style="text-decoration: none; padding: 12px 0">Iz srca Zagreba</a>
+<a href="#lokalno" onClick="{{closeMenu}}" style="text-decoration: none; padding: 12px 0">Gdje kupiti</a>
+</nav>
+</sc-if>
+</header>
+
+<section id="vrh">
+<div class="pv-wrap pv-hero" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 48px 48px 40px; display: flex; flex-direction: column; gap: 36px">
+<svg class="pv-hero-svg" width="100%" height="340" viewBox="0 -80 963 84" preserveAspectRatio="none" style="display: block; overflow: visible" role="img" aria-label="Tvoj potez."><text x="0" y="0" font-family="Oi, sans-serif" font-size="100" fill="{{t.ink}}">TVOJ POTEZ.</text></svg>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap">
+</div>
+</div>
+</section>
+
+<section id="piva" style="position: relative; height: 2700px">
+<div id="pv-spin" style="position: absolute; inset: 0" aria-hidden="true"></div>
+<div class="pv-sticky" style="position: sticky; top: 76px; height: 820px; overflow: hidden">
+<div class="pv-spin-grid" style="max-width: 1440px; height: 100%; margin: 0 auto; box-sizing: border-box; padding: 40px 48px 196px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 110px">
+<div class="pv-copy" style="align-self: start; min-width: 0; max-width: 560px; display: flex; flex-direction: column; gap: 26px; position: relative; z-index: 3">
+<h2 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0">{{t.title}}</h2>
+<p class="pv-taste" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 46px; line-height: 1.05; letter-spacing: -0.01em">{{t.taste}}</p>
+<dl class="pv-dl" style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 22px; font-size: 20px; line-height: 1.4">
+<dt style="font-weight: 700">Sastojci</dt><dd style="margin: 0">{{t.ingr}}</dd>
+<dt style="font-weight: 700">Jačina</dt><dd style="margin: 0">[X,X % vol.] · 0,33 l</dd>
+<dt style="font-weight: 700">Uz što</dt><dd style="margin: 0">{{t.pair}}</dd>
+</dl>
+<a href="#naruci" class="pv-fade pv-cta" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; background: {{t.ink}}; color: {{t.bg}}; text-decoration: none; font-weight: 700; font-size: 19px; padding: 17px 30px; border-radius: 999px; box-shadow: 5px 5px 0 #141414"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.bg}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1.5 12h-11z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>Naruči u internetskoj trgovini</a>
+</div>
+<div class="pv-can-col" style="position: relative; min-width: 0">
+<div class="pv-fade pv-can-ring" style="position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; transform: translate(-50%, -50%); border-radius: 50%; background: {{t.accent}}; opacity: 0.55" aria-hidden="true"></div>
+<div class="pv-can" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(45deg) scale(0.82); filter: drop-shadow(18px 26px 22px rgba(0,0,0,0.35)); display: flex; flex-direction: column; align-items: center">
+<div style="width: 220px; height: 22px; border-radius: 50%; background: radial-gradient(ellipse at 45% 40%, #FBF0C4 0%, #D8B45A 45%, #8C6A23 100%); margin-bottom: -12px; position: relative; z-index: 2"></div>
+<div style="width: 250px; height: 28px; border-radius: 50% 50% 4px 4px / 100% 100% 4px 4px; background: linear-gradient(90deg, #6B5220 0%, #C9A043 18%, #F7E7A8 30%, #D9B65A 50%, #A98431 72%, #5E4718 100%)"></div>
+<div style="position: relative; width: 260px; height: 583px; overflow: hidden; border-radius: 3px 3px 10px 10px; background: #141414">
+<sc-for list="{{slices}}" as="s" hint-placeholder-count="36">
+<div class="pv-strip" style="position: absolute; top: 0; left: {{s.x}}px; width: {{s.w}}px; height: 583px; background-size: {{s.size}}px 583px; background-position: {{s.pos}}px 0"></div>
+</sc-for>
+<div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.14) 10%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.34) 29%, rgba(255,255,255,0.06) 36%, rgba(255,255,255,0) 48%, rgba(0,0,0,0) 62%, rgba(0,0,0,0.22) 82%, rgba(0,0,0,0.6) 100%)"></div>
+</div>
+<div style="width: 250px; height: 24px; border-radius: 4px 4px 50% 50% / 4px 4px 100% 100%; background: linear-gradient(90deg, #4E3A14 0%, #B48E3C 22%, #EAD493 32%, #A9873A 55%, #47350F 100%)"></div>
+</div>
+</div>
+</div>
+<p class="pv-tagline" style="position: absolute; left: 48px; right: 48px; bottom: 16px; margin: 0; text-align: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; line-height: 1.2">Zagrebačko craft pivo. Tri piva, jedan potez.</p>
+<div class="pv-fade pv-marq-wrap" style="position: absolute; left: 0; right: 0; bottom: 104px; height: 76px; overflow: hidden; display: flex; align-items: center">
+<ul class="pv-marq" aria-label="Atributi Pivoline" style="list-style: none; margin: 0; padding: 0; display: flex; gap: 36px; width: max-content; flex-shrink: 0">
+<sc-for list="{{marquee}}" as="m" hint-placeholder-count="20">
+<li class="pv-fade" style="display: flex; align-items: center; white-space: nowrap; background: {{t.ink}}; color: {{t.bg}}; border-radius: 999px; padding: 12px 24px; font-weight: 700; font-size: 17px">{{m}}</li>
+</sc-for>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="prica">
+<div class="pv-wrap pv-sec" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 96px 48px 72px; display: flex; flex-direction: column; gap: 64px">
+<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<svg class="pv-h-svg" width="100%" height="120" viewBox="0 -80 586 84" preserveAspectRatio="none" style="display: block; overflow: visible" role="img" aria-label="Iz srca"><text x="0" y="0" font-family="Oi, sans-serif" font-size="100" fill="{{t.ink}}">IZ SRCA</text></svg>
+<svg class="pv-h-svg" width="100%" height="120" viewBox="0 -80 775 84" preserveAspectRatio="none" style="display: block; overflow: visible" role="img" aria-label="Zagreba"><text x="0" y="0" font-family="Oi, sans-serif" font-size="100" fill="{{t.ink}}">ZAGREBA.</text></svg>
+</div>
+<div class="pv-story" style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px; font-size: 20px; line-height: 1.55">
+<p class="pv-story-lead" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; line-height: 1.2">Priča je zapravo skroz jednostavna.</p>
+<p style="margin: 0">Volimo craft pivo, ali nam je dosadilo to što za većinu piva s police moraš guglati što uopće piješ. Zato smo odlučili napraviti Pivolinu, tri okusa, bez kompliciranja, u limenci koju prepoznaješ iz aviona.</p>
+<p style="margin: 0">Kuhamo je u Zagrebu, polako i u malim serijama, držeći se domaćih sastojaka. Pivolina je stvorena za stvarne trenutke: cuganje na terasi nakon posla, roštiljanje s društvom ili opuštanje doma uz dobar film.</p>
+<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; line-height: 1.25">Učini pravi potez. Odaberi okus koji ti leži i uživaj.</p>
+</div>
+</div>
+<div class="pv-trio" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 72px">
+<sc-for list="{{trio}}" as="b" hint-placeholder-count="3">
+<article style="display: flex; flex-direction: column; gap: 16px; padding: 8px 4px">
+<div style="display: flex; justify-content: center; position: relative; padding: 8px 0 44px">
+<div style="position: absolute; top: 50%; left: 50%; width: 230px; height: 310px; transform: translate(-50%, -50%); border-radius: 50%; background: {{b.accent}}" aria-hidden="true"></div>
+<img src="{{b.can}}" alt="{{b.alt}}" style="position: relative; height: 340px; transform: rotate({{b.rot}}deg); filter: drop-shadow(10px 16px 14px rgba(0,0,0,0.3))">
+</div>
+<h3 style="margin: 0; font-family: Oi, sans-serif; font-weight: 400; font-size: 34px; line-height: 1.1">{{b.name}}</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.5">{{b.desc}}</p>
+<button onClick="{{b.add}}" style="cursor: pointer; margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; background: {{b.ink}}; color: {{b.bg}}; border: 0; font-family: Inter, sans-serif; font-weight: 700; font-size: 16px; padding: 13px 22px; border-radius: 999px; box-shadow: 4px 4px 0 #141414"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{b.bg}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.6 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2"></path></svg>Dodaj u košaricu</button>
+</article>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="ljubitelji">
+<div class="pv-wrap pv-sec" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 72px 48px 48px; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-weight: 700; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase">Ljubitelji Pivoline</span>
+<h2 class="pv-fans-h" style="margin: 0; font-family: Oi, sans-serif; font-weight: 400; font-size: 72px; line-height: 1">#tvojpotez</h2>
+</div>
+<p style="margin: 0; max-width: 420px; font-size: 19px; line-height: 1.5">Terase, roštilji, kauči i kvartovski barovi. Podijeli svoj potez uz <strong>#tvojpotez</strong> i možda se nađeš ovdje.</p>
+</div>
+<div class="pv-fans" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 250px 250px; gap: 20px">
+<sc-for list="{{fans}}" as="f" hint-placeholder-count="5">
+<figure style="margin: 0; grid-column: {{f.col}}; grid-row: {{f.row}}; position: relative; border-radius: 24px; overflow: hidden; background: {{f.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: {{f.fg}}; border: 3px dashed {{f.fg}}; box-sizing: border-box; text-align: center; padding: 20px">
+<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="{{f.fg}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+<figcaption style="font-weight: 700; font-size: 16px; line-height: 1.35; max-width: 260px">[Fotografija] {{f.cap}}</figcaption>
+<sc-if value="{{f.hasImg}}" hint-placeholder-val="{{ false }}">
+<img src="{{f.img}}" alt="{{f.cap}}" style="position: absolute; inset: -3px; width: calc(100% + 6px); height: calc(100% + 6px); object-fit: cover; object-position: {{f.pos}}; display: block">
+</sc-if>
+</figure>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="lokalno">
+<div style="position: relative">
+<div class="pv-wrap pv-lok-h" style="position: relative; max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 96px 48px 24px; display: flex; flex-direction: column; gap: 20px">
+<svg class="pv-lok-svg" width="100%" height="168" viewBox="0 -88 510 92" preserveAspectRatio="none" style="display: block; overflow: visible" role="img" aria-label="Kušaj"><text x="0" y="0" font-family="Oi, sans-serif" font-size="100" fill="{{t.ink}}">KUŠAJ</text></svg>
+<svg class="pv-lok-svg" width="100%" height="168" viewBox="0 -79 708 83" preserveAspectRatio="none" style="display: block; overflow: visible" role="img" aria-label="Lokalno"><text x="0" y="0" font-family="Oi, sans-serif" font-size="100" fill="{{t.ink}}">LOKALNO</text></svg>
+</div>
+</div>
+<div class="pv-wrap" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 24px 48px 80px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px 48px">
+<p style="margin: 0; font-size: 18px; line-height: 1.5; max-width: 460px">Pivolina je kod kuće u Zagrebu. Probaj je u baru ili je kupi u trgovini u svom kvartu.</p>
+<div role="group" aria-label="Vrsta lokacije" style="display: flex; gap: 10px; flex-wrap: wrap">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="3">
+<button aria-pressed="{{c.sel}}" onClick="{{c.pick}}" class="pv-fade" style="cursor: pointer; font-family: Inter, sans-serif; font-weight: 700; font-size: 15px; padding: 10px 18px; border-radius: 999px; border: 3px solid {{t.ink}}; background: {{c.bg}}; color: {{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<span style="display: block; font-weight: 700; font-size: 14px; line-height: 20px; height: 20px">{{visCount}} lokacija u Zagrebu</span>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{places}}" as="pl" hint-placeholder-count="5">
+<li>
+<button onClick="{{pl.pick}}" style="cursor: pointer; width: 100%; text-align: left; font-family: Inter, sans-serif; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border: 3px solid #141414; border-radius: 18px; background: {{pl.bg}}; color: #141414">
+<span style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 16px">{{pl.name}}</strong><span style="font-size: 14px">{{pl.area}}, {{pl.city}}</span></span>
+<span style="font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: #141414; color: #FFF8EC">{{pl.kind}}</span>
+</button>
+</li>
+</sc-for>
+</ul>
+</div>
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<label style="display: flex; flex-direction: column; gap: 10px; width: 100%">
+<span style="display: block; font-weight: 700; font-size: 14px; line-height: 20px; height: 20px">Pretraži lokacije</span>
+<span style="position: relative; display: block">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); pointer-events: none"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path></svg>
+<input type="search" placeholder="Zagreb" style="width: 100%; box-sizing: border-box; font: inherit; font-family: Inter, sans-serif; font-weight: 500; font-size: 16px; padding: 14px 20px 14px 54px; border: 3px solid #141414; border-radius: 18px; background: #FFFFFF; color: #141414">
+</span>
+</label>
+<div style="position: relative; width: 100%; aspect-ratio: 1000 / 649; border-radius: 18px; border: 3px solid #141414; box-sizing: border-box; overflow: hidden; background: #AADAFF; box-shadow: 0 2px 6px rgba(60,64,67,0.3), 0 8px 24px rgba(60,64,67,0.18)">
+<div style="position: absolute; inset: 0; transform: scale({{zoom}}); transform-origin: {{origin}}; transition: transform 0.35s ease">
+<img src="assets/karta-zagreb.svg" alt="Karta Zagreba s lokacijama Pivoline" style="position: absolute; inset: 0; width: 100%; height: 100%">
+</div>
+<sc-for list="{{pins}}" as="pn" hint-placeholder-count="9">
+<button onClick="{{pn.pick}}" aria-label="{{pn.label}}" style="cursor: pointer; position: absolute; left: {{pn.x}}%; top: {{pn.y}}%; width: {{pn.w}}px; height: {{pn.h}}px; transform: translate(-50%, -100%); background: none; border: 0; padding: 0; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); transition: left 0.35s ease, top 0.35s ease"><svg viewBox="0 0 24 34" width="100%" height="100%" aria-hidden="true"><path d="M12 0C5.4 0 0 5.2 0 11.7 0 20.4 12 34 12 34s12-13.6 12-22.3C24 5.2 18.6 0 12 0z" fill="#EA4335" stroke="#B31412" stroke-width="1"></path><circle cx="12" cy="11.6" r="4.3" fill="#B31412"></circle></svg></button>
+</sc-for>
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: {{card.sx}}%; top: {{card.sy}}%; transform: translate(-50%, calc(-100% - 56px)); background: #FFFFFF; color: #202124; border-radius: 8px; padding: 12px 16px 12px; box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3); min-width: 220px; display: flex; flex-direction: column; gap: 3px; font-family: Inter, system-ui, sans-serif">
+<strong style="font-size: 16px; font-weight: 600">{{card.name}}</strong>
+<span style="font-size: 14px; color: #5F6368">{{card.kind}} · {{card.area}}, {{card.city}}</span>
+<a href="#lokalno" style="margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; color: #1A73E8; text-decoration: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A73E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2z"></path></svg>Upute</a>
+<span style="position: absolute; left: 50%; bottom: -7px; width: 14px; height: 14px; background: #FFFFFF; transform: translateX(-50%) rotate(45deg); box-shadow: 3px 3px 4px rgba(0,0,0,0.12)" aria-hidden="true"></span>
+</div>
+</sc-if>
+<div style="position: absolute; right: 16px; bottom: 20px; display: flex; flex-direction: column; background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.3); overflow: hidden">
+<button onClick="{{zoomIn}}" aria-label="Povećaj kartu" style="cursor: pointer; width: 44px; height: 44px; border: 0; background: #FFFFFF; font-size: 24px; line-height: 1; color: #5F6368; font-family: Inter, sans-serif">+</button>
+<span style="height: 1px; background: #E6E6E6; margin: 0 8px" aria-hidden="true"></span>
+<button onClick="{{zoomOut}}" aria-label="Smanji kartu" style="cursor: pointer; width: 44px; height: 44px; border: 0; background: #FFFFFF; font-size: 24px; line-height: 1; color: #5F6368; font-family: Inter, sans-serif">−</button>
+</div>
+<div style="position: absolute; left: 16px; top: 16px; display: flex; background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.3); overflow: hidden; font-family: Inter, sans-serif; font-size: 14px">
+<span style="padding: 10px 16px; font-weight: 600; color: #202124">Karta</span>
+<span style="padding: 10px 16px; color: #5F6368; border-left: 1px solid #E6E6E6">{{visCount}} lokacija</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="pv-fade" style="background: {{t.ink}}; color: {{t.bg}}">
+<div class="pv-wrap pv-foot" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 72px 48px 32px; display: flex; flex-direction: column; gap: 56px">
+<div style="display: flex; flex-wrap: wrap; gap: 48px; justify-content: space-between">
+<div style="flex: 1 1 280px; min-width: 0; max-width: 420px; display: flex; flex-direction: column; gap: 18px">
+<span style="display: flex; align-items: center; gap: 14px"><svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true"><rect x="0" y="0" width="8" height="8" fill="{{t.bg}}"></rect><rect x="16" y="0" width="8" height="8" fill="{{t.bg}}"></rect><rect x="8" y="8" width="8" height="8" fill="{{t.bg}}"></rect><rect x="0" y="16" width="8" height="8" fill="{{t.bg}}"></rect><rect x="16" y="16" width="8" height="8" fill="{{t.bg}}"></rect></svg><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 40px; letter-spacing: 0.04em; line-height: 1">PIVOLINA</span></span>
+<p style="margin: 0; font-size: 17px; line-height: 1.5">Zagrebačko craft pivo. Tri piva, jedan potez. Kuhano u malim serijama, u Zagrebu.</p>
+<form style="display: flex; flex-direction: column; gap: 10px" aria-label="Prijava na newsletter">
+<label for="pv-news" style="font-weight: 700; font-size: 15px">Obavijesti me o Pivolina događanjima</label>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<input id="pv-news" type="email" placeholder="tvoj@email.hr" style="flex: 1 1 200px; min-width: 0; font: inherit; font-size: 16px; padding: 13px 18px; border-radius: 999px; border: 0; background: #FFF8EC; color: #141414">
+<button type="button" style="cursor: pointer; font-family: Inter, sans-serif; font-weight: 700; font-size: 16px; padding: 13px 24px; border-radius: 999px; border: 0; background: {{t.bg}}; color: {{t.ink}}">Prijavi se</button>
+</div>
+</form>
+</div>
+<nav class="pv-foot-nav" aria-label="Podnožje" style="flex: 2 1 320px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 32px 28px; font-size: 16px; line-height: 1.4">
+<sc-for list="{{footCols}}" as="col" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-weight: 800; font-size: 14px; letter-spacing: 0.08em; line-height: 1.3; text-transform: uppercase; overflow-wrap: break-word; hyphens: auto" lang="hr">{{col.title}}</span>
+<sc-for list="{{col.links}}" as="l" hint-placeholder-count="4">
+<a href="{{l.href}}" style="text-decoration: none; padding: 2px 0">{{l.label}}</a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center">
+<div style="display: flex; gap: 10px; flex-wrap: wrap" aria-label="Društvene mreže">
+<sc-for list="{{socials}}" as="so" hint-placeholder-count="4">
+<a href="{{so.href}}" class="pv-fade" style="display: inline-flex; align-items: center; gap: 8px; border: 2px solid {{t.bg}}; border-radius: 999px; padding: 10px 18px; font-weight: 700; font-size: 15px; text-decoration: none">{{so.name}}<span style="font-weight: 500; opacity: 0.8">@pivolina</span></a>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 15px">
+<span style="flex: 0 0 44px; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-width: 44px; box-sizing: border-box; border-radius: 50%; border: 2px solid {{t.bg}}; font-size: 14px; white-space: nowrap">18+</span>
+<span>Pivolinu prodajemo samo punoljetnim osobama. Pij odgovorno.</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; font-size: 14px; opacity: 0.85; border-top: 2px solid {{t.bg}}; padding-top: 20px">
+<span>© 2026 Pivolina · Zagreb, Hrvatska · [e-mail za kontakt]</span>
+<span>Fiktivni brend izrađen za EY Studio+ dizajnerski zadatak.</span>
+</div>
+</div>
+</footer>
+</div>
+</template>
+<script type="text/x-dc" data-dc-script data-props='{"preview":{"editor":"enum","options":["scroll","pšenično","pale ale","tamno"],"default":"scroll","section":"Pregled"},"$preview":{"width":1440,"height":4560}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+let ok = false;
+try { ok = window.sessionStorage.getItem('pv-age') === '1'; } catch (e) {}
+this.state = { p: 0, filter: 'all', sel: 'zg1', zoom: 1, cart: 0, menu: false, age: ok ? 'yes' : 'ask' };
+}
+componentDidMount() {
+this.lockScroll(this.state.age !== 'yes');
+this._raf = null;
+this._on = () => {
+if (this._raf) return;
+this._raf = requestAnimationFrame(() => {
+this._raf = null;
+const el = document.getElementById('pv-spin');
+if (!el) return;
+const r = el.getBoundingClientRect();
+const vh = window.innerHeight || 900;
+const total = r.height - vh;
+const p = Math.min(1, Math.max(0, total > 0 ? (76 - r.top) / total : 0));
+if (Math.abs(p - this.state.p) > 0.001) this.setState({ p: p });
+});
+};
+window.addEventListener('scroll', this._on, true);
+window.addEventListener('resize', this._on);
+this._on();
+}
+componentWillUnmount() {
+window.removeEventListener('scroll', this._on, true);
+window.removeEventListener('resize', this._on);
+if (this._raf) cancelAnimationFrame(this._raf);
+}
+lockScroll(on) {
+try { document.documentElement.style.overflow = on ? 'hidden' : ''; document.body.style.overflow = on ? 'hidden' : ''; } catch (e) {}
+}
+jump(i) {
+this.setState({ p: i / 2 });
+const el = document.getElementById('pv-spin');
+if (!el) return;
+const vh = window.innerHeight || 900;
+const total = el.offsetHeight - vh;
+const top = el.getBoundingClientRect().top + window.scrollY - 76 + total * (i / 2);
+window.scrollTo({ top: top, behavior: 'smooth' });
+}
+renderVals() {
+const beers = [
+{ check: '#FF8A3D', label: 'Pšenično', short: 'pšenično', bg: '#FFD23F', ink: '#8F2F06', accent: '#FF8A3D',
+lines: [{ t: 'PŠENIČNO', vb: '0 -88 766 92', h: 92 }, { t: 'PIVO', vb: '0 -80 371 84', h: 172 }],
+taste: 'Lagano i pitko. Zlatno pšenično pivo za duge dane.', ingr: 'Pšenica, ječmeni slad, hmelj, kvasac, voda', pair: 'Salate, riba, ljetna terasa' },
+{ check: '#A9DCF7', label: 'Pale Ale', short: 'pale ale', bg: '#1D3C8F', ink: '#A9DCF7', accent: '#2F5BC4',
+lines: [{ t: 'PALE', vb: '0 -80 398 83', h: 114 }, { t: 'ALE', vb: '0 -79 300 82', h: 150 }],
+taste: 'Osvježavajuće, izraženijeg karaktera. Za one koji žele malo više.', ingr: 'Ječmeni slad, hmelj, kvasac, voda', pair: 'Burger, roštilj, pizza' },
+{ check: '#FF8FC8', label: 'Tamno', short: 'tamno', bg: '#5B2A86', ink: '#FF8FC8', accent: '#7A3FB0',
+lines: [{ t: 'TAMNO', vb: '0 -79 533 83', h: 107 }, { t: 'PIVO', vb: '0 -80 371 84', h: 157 }],
+taste: 'Bogato i intenzivno. Prženi slad za duge večeri.', ingr: 'Prženi ječmeni slad, hmelj, kvasac, voda', pair: 'Pečenje, zreli sir, tamna čokolada' }
+];
+const pv = this.props.preview || 'scroll';
+const forced = { 'pšenično': 0, 'pale ale': 1, 'tamno': 2 }[pv];
+const p = forced === undefined ? this.state.p : forced / 2;
+const idx = Math.min(2, Math.max(0, Math.round(p * 2)));
+const t = beers[idx];
+const R = 130, N = 36, tc = 0.5 + p * 2;
+const slices = [];
+for (let k = 0; k < N; k++) {
+const a = -Math.PI / 2 + (k * Math.PI) / N;
+const b = -Math.PI / 2 + ((k + 1) * Math.PI) / N;
+const x = R * (1 + Math.sin(a));
+const w = R * (Math.sin(b) - Math.sin(a));
+const lt = (b - a) / Math.PI;
+const size = (3 * w) / lt;
+const ta = tc + a / Math.PI;
+slices.push({ x: x.toFixed(2), w: (w + 0.7).toFixed(2), size: size.toFixed(2), pos: (-ta * size / 3).toFixed(2) });
+}
+const dots = beers.map((x, i) => ({ label: x.label, sel: i === idx ? 'true' : 'false', bg: i === idx ? t.ink : 'transparent', fg: i === idx ? t.bg : t.ink, go: () => this.jump(i) }));
+const all = [
+{ id: 'zg1', name: 'Craft bar', city: 'Zagreb', area: 'Gornji grad', type: 'bar', x: 48.5, y: 36.8 },
+{ id: 'dg', name: 'Pivnica', city: 'Zagreb', area: 'Donji grad', type: 'bar', x: 44.8, y: 43.2 },
+{ id: 'zg2', name: 'Trgovina pića', city: 'Zagreb', area: 'Trešnjevka', type: 'shop', x: 32.9, y: 51.6 },
+{ id: 'tr', name: 'Trgovina pića', city: 'Zagreb', area: 'Trnje', type: 'shop', x: 51.9, y: 54.2 },
+{ id: 'mk', name: 'Pivnica', city: 'Zagreb', area: 'Maksimir', type: 'bar', x: 64.8, y: 32.1 },
+{ id: 'ja', name: 'Bar uz jezero', city: 'Zagreb', area: 'Jarun', type: 'bar', x: 23.3, y: 67.4 },
+{ id: 'nz', name: 'Trgovina pića', city: 'Zagreb', area: 'Novi Zagreb', type: 'shop', x: 49.0, y: 79.5 }
+];
+const f = this.state.filter;
+const vis = all.filter((q) => f === 'all' || q.type === f);
+const selP = vis.find((q) => q.id === this.state.sel);
+const chips = [['all', 'Sve'], ['bar', 'Barovi'], ['shop', 'Trgovine']].map(([k, l]) => ({ label: l, sel: k === f ? 'true' : 'false', bg: k === f ? t.ink : 'transparent', fg: k === f ? t.bg : t.ink, pick: () => this.setState({ filter: k }) }));
+const places = vis.map((q) => ({ name: q.name, city: q.city, area: q.area, kind: q.type === 'bar' ? 'Bar' : 'Trgovina', bg: q.id === this.state.sel ? '#FFF8EC' : '#FFFFFF', pick: () => this.setState({ sel: q.id }) }));
+if (!this._lok) {
+let a = 7;
+const rnd = () => { a = (a * 16807) % 2147483647; return a / 2147483647; };
+const C = 44, rows = 14, cols = 41, mid = (rows - 1) / 2;
+const out = [];
+for (let r = 0; r < rows; r++) {
+for (let c = 0; c < cols; c++) {
+if ((r + c) % 2) continue;
+const d = Math.abs(r - mid) / (mid + 0.5);
+const keep = d < 0.6 ? 1 : 1 - Math.pow((d - 0.6) / 0.4, 1.4) * 0.95;
+if (rnd() > keep) continue;
+const sz = d < 0.6 ? C + 0.6 : C * Math.max(0.35, 1 - ((d - 0.6) / 0.4) * 0.65) * (0.94 + rnd() * 0.06);
+out.push({ x: (c * C + (C - sz) / 2).toFixed(1), y: (r * C + (C - sz) / 2).toFixed(1), s: sz.toFixed(1) });
+}
+}
+this._lok = out;
+}
+const z = this.state.zoom || 1;
+const ox = selP ? selP.x : 50, oy = selP ? selP.y : 50;
+const sx = (v) => +(ox + (v - ox) * z).toFixed(2);
+const sy = (v) => +(oy + (v - oy) * z).toFixed(2);
+const pins = vis.map((q) => { const s = q.id === this.state.sel; return { x: sx(q.x), y: sy(q.y), w: s ? 34 : 24, h: s ? 48 : 34, label: q.name + ', ' + q.city, pick: () => this.setState({ sel: q.id }) }; });
+const steps = [1, 1.6, 2.4];
+const zi = steps.indexOf(z);
+return {
+t: Object.assign({}, t, { title: t.label === 'Pale Ale' ? 'Pale Ale' : t.label + ' pivo' }), isW: idx === 0, isP: idx === 1, isD: idx === 2, buyLabel: 'Kupi ' + t.short, slices: slices, dots: dots,
+trio: [].concat([
+{ name: 'Pšenično pivo', bg: '#FFD23F', ink: '#8F2F06', accent: '#FF8A3D', rot: -5, can: 'assets/limenka-psenicno.png', alt: 'Limenka Pivolina Pšenično pivo', buy: 'Kupi pšenično', desc: 'Mekano, lagano i zlatno. Pšenično pivo koje se pije samo od sebe, idealno za prvi susret s craft pivom.' },
+{ name: 'Pale Ale', bg: '#1D3C8F', ink: '#A9DCF7', accent: '#2F5BC4', rot: 3, can: 'assets/limenka-pale-ale.png', alt: 'Limenka Pivolina Pale Ale', buy: 'Kupi pale ale', desc: 'Svježe i hmeljasto, s malo više karaktera. Za one koji su spremni na sljedeći potez.' },
+{ name: 'Tamno pivo', bg: '#5B2A86', ink: '#FF8FC8', accent: '#7A3FB0', rot: -3, can: 'assets/limenka-tamno.png', alt: 'Limenka Pivolina Tamno pivo', buy: 'Kupi tamno', desc: 'Bogato, puno i toplo. Prženi slad daje mu note kave i karamele, za sporije večeri.' }
+]).map((x) => Object.assign({}, x, { add: () => this.setState({ cart: this.state.cart + 1 }) })),
+fans: [
+{ col: '1 / span 2', row: '1 / span 2', cap: 'Pivolina kaciga za najveće ljubitelje', bg: '#FFD23F', fg: '#8F2F06', hasImg: true, pos: 'center 22%', img: 'assets/foto-kaciga.jpg' },
+{ col: '3', row: '1', cap: 'Nazdravlje na balkonu uz zalazak sunca', bg: '#A9DCF7', fg: '#1D3C8F', hasImg: true, pos: 'center', img: 'assets/foto-balkon.jpg' },
+{ col: '4', row: '1', cap: 'Film, kokice i Tamno pivo na kauču', bg: '#FF8FC8', fg: '#5B2A86', hasImg: true, pos: 'center', img: 'assets/foto-kauc.jpg' },
+{ col: '3', row: '2', cap: 'Pšenično pivo na kamenu uz more', bg: '#FF8A3D', fg: '#5A1E04', hasImg: true, pos: 'center', img: 'assets/foto-more.jpg' },
+{ col: '4', row: '2', cap: 'Piknik u prirodi s pršutom i kruhom', bg: '#FFF8EC', fg: '#141414', hasImg: true, pos: 'center', img: 'assets/foto-piknik.jpg' }
+],
+footCols: [
+{ title: 'Pivolina', links: [{ label: 'Upoznaj Pivolinu', href: '#piva' }, { label: 'Iz srca Zagreba', href: '#prica' }, { label: '#tvojpotez', href: '#ljubitelji' }, { label: 'Gdje kupiti', href: '#lokalno' }] },
+{ title: 'Internetska trgovina', links: [{ label: 'Kupi Pivolinu', href: '#naruci' }, { label: 'Košarica', href: '#kosarica' }, { label: 'Dostava i plaćanje', href: '#dostava' }, { label: 'Povrat', href: '#povrat' }] },
+{ title: 'Pomoć', links: [{ label: 'Kontakt', href: '#kontakt' }, { label: 'Česta pitanja', href: '#pitanja' }, { label: 'Za ugostitelje', href: '#b2b' }, { label: 'Posao', href: '#posao' }] },
+{ title: 'Pravno', links: [{ label: 'Uvjeti korištenja', href: '#uvjeti' }, { label: 'Privatnost', href: '#privatnost' }, { label: 'Kolačići', href: '#kolacici' }, { label: 'Impresum', href: '#impresum' }] }
+],
+socials: [{ name: 'Instagram', href: '#instagram' }, { name: 'TikTok', href: '#tiktok' }, { name: 'Facebook', href: '#facebook' }, { name: 'YouTube', href: '#youtube' }],
+marquee: [].concat(...Array(4).fill(['Zagrebačko craft pivo', 'Kuhano u Zagrebu', 'Male serije', 'Lokalni sastojci', 'Limenka se reciklira'])),
+gateOpen: this.state.age !== 'yes', gateAsk: this.state.age === 'ask', gateNo: this.state.age === 'no',
+ageYes: () => { try { window.sessionStorage.setItem('pv-age', '1'); } catch (e) {} this.lockScroll(false); this.setState({ age: 'yes' }); },
+ageNo: () => this.setState({ age: 'no' }),
+ageBack: () => this.setState({ age: 'ask' }),
+chips: chips, places: places, pins: pins, lokCells: this._lok, menuOpen: this.state.menu, menuExpanded: this.state.menu ? 'true' : 'false', toggleMenu: () => this.setState({ menu: !this.state.menu }), closeMenu: () => this.setState({ menu: false }), cartCount: this.state.cart, cartHas: this.state.cart > 0, cartLabel: 'Košarica, ' + this.state.cart + ' proizvoda', hasSel: !!selP, visCount: vis.length,
+zoom: z, origin: ox + '% ' + oy + '%', zoomIn: () => this.setState({ zoom: steps[Math.min(2, zi + 1)] }), zoomOut: () => this.setState({ zoom: steps[Math.max(0, zi - 1)] }),
+card: selP ? Object.assign({}, selP, { sx: sx(selP.x), sy: sy(selP.y), kind: selP.type === 'bar' ? 'Bar' : 'Trgovina' }) : { sx: 0, sy: 0, name: '', city: '', area: '', kind: '' }
+};
+}
+}
+</script>
+<script src="runtime.js"></script>
+</body>
+</html>
