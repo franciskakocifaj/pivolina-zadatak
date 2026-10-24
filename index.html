@@ -194,9 +194,9 @@ Kupi<span class="pv-hide-sm">&#160;Pivolinu</span>
 <div style="position: absolute; top: 50%; left: 50%; width: 230px; height: 310px; transform: translate(-50%, -50%); border-radius: 50%; background: {{b.accent}}" aria-hidden="true"></div>
 <img src="{{b.can}}" alt="{{b.alt}}" style="position: relative; height: 340px; transform: rotate({{b.rot}}deg); filter: drop-shadow(10px 16px 14px rgba(0,0,0,0.3))">
 </div>
-<h3 style="margin: 0; font-family: Oi, sans-serif; font-weight: 400; font-size: 34px; line-height: 1.1">{{b.name}}</h3>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 36px; line-height: 1.1; letter-spacing: -0.01em">{{b.name}}</h3>
 <p style="margin: 0; font-size: 17px; line-height: 1.5">{{b.desc}}</p>
-<button onClick="{{b.add}}" style="cursor: pointer; margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; background: {{b.ink}}; color: {{b.bg}}; border: 0; font-family: Inter, sans-serif; font-weight: 700; font-size: 16px; padding: 13px 22px; border-radius: 999px; box-shadow: 4px 4px 0 #141414"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{b.bg}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.6 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2"></path></svg>Dodaj u košaricu</button>
+<button onClick="{{b.add}}" style="cursor: pointer; margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; background: #FFFFFF; color: {{b.prim}}; border: 0; font-family: Inter, sans-serif; font-weight: 700; font-size: 16px; padding: 13px 22px; border-radius: 999px; box-shadow: 4px 4px 0 #141414"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{b.prim}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.6 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2"></path></svg>Dodaj u košaricu</button>
 </article>
 </sc-for>
 </div>
@@ -453,9 +453,9 @@ const zi = steps.indexOf(z);
 return {
 t: Object.assign({}, t, { title: t.label === 'Pale Ale' ? 'Pale Ale' : t.label + ' pivo' }), isW: idx === 0, isP: idx === 1, isD: idx === 2, buyLabel: 'Kupi ' + t.short, slices: slices, dots: dots,
 trio: [].concat([
-{ name: 'Pšenično pivo', bg: '#FFD23F', ink: '#8F2F06', accent: '#FF8A3D', rot: -5, can: 'assets/limenka-psenicno.png', alt: 'Limenka Pivolina Pšenično pivo', buy: 'Kupi pšenično', desc: 'Mekano, lagano i zlatno. Pšenično pivo koje se pije samo od sebe, idealno za prvi susret s craft pivom.' },
-{ name: 'Pale Ale', bg: '#1D3C8F', ink: '#A9DCF7', accent: '#2F5BC4', rot: 3, can: 'assets/limenka-pale-ale.png', alt: 'Limenka Pivolina Pale Ale', buy: 'Kupi pale ale', desc: 'Svježe i hmeljasto, s malo više karaktera. Za one koji su spremni na sljedeći potez.' },
-{ name: 'Tamno pivo', bg: '#5B2A86', ink: '#FF8FC8', accent: '#7A3FB0', rot: -3, can: 'assets/limenka-tamno.png', alt: 'Limenka Pivolina Tamno pivo', buy: 'Kupi tamno', desc: 'Bogato, puno i toplo. Prženi slad daje mu note kave i karamele, za sporije večeri.' }
+{ name: 'Pšenično pivo', prim: '#8F2F06', bg: '#FFD23F', ink: '#8F2F06', accent: '#FF8A3D', rot: -5, can: 'assets/limenka-psenicno.png', alt: 'Limenka Pivolina Pšenično pivo', buy: 'Kupi pšenično', desc: 'Mekano, lagano i zlatno. Pšenično pivo koje se pije samo od sebe, idealno za prvi susret s craft pivom.' },
+{ name: 'Pale Ale', prim: '#1D3C8F', bg: '#1D3C8F', ink: '#A9DCF7', accent: '#2F5BC4', rot: 3, can: 'assets/limenka-pale-ale.png', alt: 'Limenka Pivolina Pale Ale', buy: 'Kupi pale ale', desc: 'Svježe i hmeljasto, s malo više karaktera. Za one koji su spremni na sljedeći potez.' },
+{ name: 'Tamno pivo', prim: '#5B2A86', bg: '#5B2A86', ink: '#FF8FC8', accent: '#7A3FB0', rot: -3, can: 'assets/limenka-tamno.png', alt: 'Limenka Pivolina Tamno pivo', buy: 'Kupi tamno', desc: 'Bogato, puno i toplo. Prženi slad daje mu note kave i karamele, za sporije večeri.' }
 ]).map((x) => Object.assign({}, x, { add: () => this.setState({ cart: this.state.cart + 1 }) })),
 fans: [
 { col: '1 / span 2', row: '1 / span 2', cap: 'Pivolina kaciga za najveće ljubitelje', bg: '#FFD23F', fg: '#8F2F06', hasImg: true, pos: 'center 22%', img: 'assets/foto-kaciga.jpg' },
